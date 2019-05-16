@@ -6,12 +6,15 @@ class Radios extends Component {
     state = { 
         radio : '',
         reachesDistance : {},
-        time: [],
+        time: {},
         checked: 0
     }  
-    getStateTime = (e) => {
-        console.log('test : ',this.state.radio,this.state.time,'this dropdown last time : ',this.state.time.slice(-1)[0]);
-        return this.props.getTime(this.state.time.slice(-1)[0])
+    handleChange = ( e ) => {
+        console.log(this.state,e.target);
+        let objSpeed = Object.assign({},this.state.time,{ [this.props.id]:( this.props.selected / e.target.speed ) });
+        console.log(objSpeed);
+        this.setState({time: objSpeed,checked: e.target.id, radio: e.target.id, }, () => {  console.log('this dropdown last time : ',this.state.time) });
+
     }
     render = () => {
         
@@ -28,15 +31,13 @@ class Radios extends Component {
                             <input 
                                     className={``}
                                     id={ name } 
+                                    speed = { speed }
                                     type="radio" 
                                     name={`planet-${ this.props.id }`} 
                                     value={ this.state.chkbox === name ? total_no - 1 : total_no } 
                                     // defaultChecked={this.state.radio} 
                                     defaultChecked={this.state.checked === i? true: false}
-                                    onChange={ ( e ) => { 
-                                                            this.setState({  checked: e.target.id, radio: e.target.id, time: [...this.state.time,(this.props.selected / speed)] },( e )=>{ this.getStateTime() } );  
-                                                        }
-                                            } />
+                                    onChange={ this.handleChange  } />
                             <label htmlFor={`planet-${ this.props.id }`}>{ name } {` (${ this.state.radio === name ? total_no - 1 : total_no } ) `}</label>
                             
                         </div>
