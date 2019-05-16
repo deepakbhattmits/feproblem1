@@ -10,8 +10,8 @@ class Radios extends Component {
         checked: 0
     }  
     handleChange = ( e ) => {
-        console.log(this.state,e.target);
-        let objSpeed = Object.assign({},this.state.time,{ [this.props.id]:( this.props.selected / e.target.speed ) });
+        console.log(this.state,e.target.speed);
+        let objSpeed = Object.assign({},this.state.time,{ [this.props.id]:( this.props.selected / parseInt(e.target.speed) ) });
         console.log(objSpeed);
         this.setState({time: objSpeed,checked: e.target.id, radio: e.target.id, }, () => {  console.log('this dropdown last time : ',this.state.time) });
 
