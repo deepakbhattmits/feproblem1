@@ -1,25 +1,26 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import { getToken } from '../actions';
 import '../assets/css/styles.css';
 import DropDown from './DropDown';
 import Time from './Time';
 
-class App extends Component {
-    componentDidMount() {
-        this.props.getToken();
-    }
+const App = () =>{
+    const dispatch = useDispatch();
     // Reset = () => {
     //     console.log('test');
     //     this.setState({ value: '' })
     // }
-    render() {
         // console.log('app',this.props);
+    useEffect(() =>
+    {
+        dispatch(getToken());
+    }, [dispatch]);
         return (
             <div className={`ui container`}>
                 <div className='ui secondary menu'>
                     <div className='right item'>
-                        <button className="button default-button ui item" onClick={ this.Reset }>
+                        <button className="button default-button ui item" >
                             Reset
                         </button> 
                     </div>
@@ -37,5 +38,4 @@ class App extends Component {
               </div>
         );
     }
-};
-export default connect(null,{ getToken } )(App);
+export default App;
